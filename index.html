@@ -1,86 +1,285 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Study Tracker</title>
+<title>My Study Tracker | Dashboard</title>
 
 <style>
+:root {
+  --bg: #f4f6fc;
+  --card: #ffffff;
+  --text: #202943;
+  --muted: #78839b;
+  --border: #e8ebf3;
+  --accent: #6259e8;
+  --accent2: #8a69f5;
+  --soft: #eeedff;
+  --danger: #e45469;
+  --shadow: 0 12px 35px rgba(40,45,90,.07);
+}
+
+body.dark {
+  --bg: #111526;
+  --card: #1b2238;
+  --text: #edf0ff;
+  --muted: #a1abc4;
+  --border: #303951;
+  --accent: #9285ff;
+  --accent2: #b19cff;
+  --soft: #302d55;
+  --danger: #ff7185;
+  --shadow: 0 12px 35px rgba(0,0,0,.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f0f4fa;
   margin: 0;
-  padding: 30px 15px;
-  color: #202b40;
+  padding: 35px 18px;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: .25s;
 }
 
 .container {
-  max-width: 550px;
+  max-width: 850px;
   margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 5px 20px #00000012;
 }
 
-h1 { color: #315be8; }
-
-.subtitle { color: #718096; }
-
-.input-area {
+header {
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
-input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px;
-  border: 1px solid #ccd5e2;
-  border-radius: 8px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 32px;
+}
+
+h1 {
+  font-size: 25px;
+  margin: 0;
+  letter-spacing: -.7px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 6px 0 0;
+  font-size: 13px;
 }
 
 button {
-  padding: 11px 15px;
-  background: #315be8;
-  color: white;
+  cursor: pointer;
+  font: inherit;
   border: none;
-  border-radius: 8px;
+}
+
+.theme-btn {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 11px 15px;
+  border-radius: 12px;
+}
+
+.welcome {
+  background: linear-gradient(120deg,#6259e8,#9275f4);
+  color: white;
+  padding: 28px;
+  border-radius: 22px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+
+.welcome h2 {
+  margin: 0 0 9px;
+  font-size: 23px;
+}
+
+.welcome p {
+  margin: 0;
+  opacity: .88;
+  font-size: 14px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 21px;
+  box-shadow: var(--shadow);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 750;
+  margin-top: 9px;
+}
+
+.main-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--shadow);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.section-heading h3 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.progress-track {
+  height: 10px;
+  border-radius: 20px;
+  background: var(--border);
+  overflow: hidden;
+  margin: 12px 0 25px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg,#6259e8,#ae83ff);
+  border-radius: 20px;
+  transition: .3s;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 23px;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: var(--accent);
+}
+
+.add-btn {
+  background: var(--accent);
+  color: white;
+  padding: 0 21px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.add-btn:hover {
+  opacity: .88;
+}
+
+#taskList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.task:last-child {
+  border-bottom: none;
+}
+
+.task input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
   cursor: pointer;
 }
 
-li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
+.task span {
+  flex: 1;
+  overflow-wrap: anywhere;
+  font-size: 14px;
 }
 
-li span { flex: 1; }
-
-.done {
+.task.done span {
   text-decoration: line-through;
-  color: #999;
+  color: var(--muted);
 }
 
-.delete {
-  background: #e34d4d;
+.delete-btn {
+  background: transparent;
+  color: var(--danger);
+  padding: 8px 10px;
+  border-radius: 8px;
 }
 
-.progress {
-  background: #e5eaf2;
-  height: 10px;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 12px;
+.delete-btn:hover {
+  background: var(--soft);
 }
 
-#bar {
-  height: 100%;
-  width: 0%;
-  background: #315be8;
-  transition: width .3s;
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 30px 5px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 25px 0;
+}
+
+@media(max-width:600px) {
+  body { padding: 22px 12px; }
+  .stats { gap: 9px; }
+  .card { padding: 14px; }
+  .stat-number { font-size: 23px; }
+  .main-card { padding: 17px; }
+  .welcome { padding: 23px; }
+  h1 { font-size: 20px; }
+  .theme-btn { padding: 10px; }
 }
 </style>
 </head>
@@ -88,21 +287,65 @@ li span { flex: 1; }
 <body>
 <div class="container">
 
-<h1>📚 My Study Tracker</h1>
-<p class="subtitle">Plan your day. Complete your goals.</p>
+<header>
+  <div class="brand">
+    <div class="logo">📚</div>
+    <div>
+      <h1>My Study Tracker</h1>
+      <p class="subtitle">Your personal productivity space</p>
+    </div>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
+    🌙 Dark
+  </button>
+</header>
 
-<div class="input-area">
-<input id="taskInput" placeholder="Enter a study task...">
-<button onclick="addTask()">Add</button>
-</div>
+<section class="welcome">
+  <h2>Welcome back, Student! 👋</h2>
+  <p>Small progress every day leads to big results. Keep going!</p>
+</section>
 
-<h3>Today's Tasks</h3>
-<ul id="taskList"></ul>
+<section class="stats">
+  <div class="card">
+    <div class="stat-label">📋 Total Tasks</div>
+    <div class="stat-number" id="total">0</div>
+  </div>
+  <div class="card">
+    <div class="stat-label">✅ Completed</div>
+    <div class="stat-number" id="completed">0</div>
+  </div>
+  <div class="card">
+    <div class="stat-label">🎯 Progress</div>
+    <div class="stat-number" id="percentage">0%</div>
+  </div>
+</section>
 
-<h3 id="progressText">Progress: 0%</h3>
-<div class="progress">
-<div id="bar"></div>
-</div>
+<section class="main-card">
+
+  <div class="section-heading">
+    <h3>Today's Tasks</h3>
+    <span style="color:var(--muted);font-size:12px" id="remaining">
+      0 remaining
+    </span>
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-fill" id="bar"></div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="taskInput"
+      placeholder="What do you need to study today?">
+    <button class="add-btn" onclick="addTask()">+ Add</button>
+  </div>
+
+  <ul id="taskList"></ul>
+
+</section>
+
+<footer>
+  Made with ❤️ for your learning journey
+</footer>
 
 </div>
 
@@ -120,11 +363,15 @@ function addTask() {
   const input = document.getElementById("taskInput");
   const text = input.value.trim();
 
-  if (!text) return;
+  if (!text) {
+    input.focus();
+    return;
+  }
 
-  tasks.push({ text: text, done: false });
+  tasks.push({text, done:false});
   input.value = "";
   save();
+  input.focus();
 }
 
 function toggleTask(index) {
@@ -133,7 +380,7 @@ function toggleTask(index) {
 }
 
 function deleteTask(index) {
-  tasks.splice(index, 1);
+  tasks.splice(index,1);
   save();
 }
 
@@ -141,8 +388,9 @@ function render() {
   const list = document.getElementById("taskList");
   list.innerHTML = "";
 
-  tasks.forEach((task, index) => {
+  tasks.forEach((task,index) => {
     const li = document.createElement("li");
+    li.className = "task" + (task.done ? " done" : "");
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -151,27 +399,58 @@ function render() {
 
     const span = document.createElement("span");
     span.textContent = task.text;
-    if (task.done) span.classList.add("done");
 
     const del = document.createElement("button");
+    del.className = "delete-btn";
     del.textContent = "Delete";
-    del.className = "delete";
     del.onclick = () => deleteTask(index);
 
-    li.append(checkbox, span, del);
+    li.append(checkbox,span,del);
     list.appendChild(li);
   });
 
+  if (tasks.length === 0) {
+    const empty = document.createElement("li");
+    empty.className = "empty";
+    empty.textContent = "✨ No tasks yet. Add your first study goal!";
+    list.appendChild(empty);
+  }
+
+  const total = tasks.length;
   const completed = tasks.filter(t => t.done).length;
-  const percent = tasks.length
-    ? Math.round(completed / tasks.length * 100)
+  const percent = total
+    ? Math.round(completed / total * 100)
     : 0;
 
-  document.getElementById("progressText").textContent =
-    `Progress: ${percent}%`;
-
+  document.getElementById("total").textContent = total;
+  document.getElementById("completed").textContent = completed;
+  document.getElementById("percentage").textContent = percent + "%";
+  document.getElementById("remaining").textContent =
+    (total-completed) + " remaining";
   document.getElementById("bar").style.width = percent + "%";
 }
+
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+
+  const dark = document.body.classList.contains("dark");
+
+  localStorage.setItem("studyTheme",dark ? "dark" : "light");
+
+  document.getElementById("themeBtn").textContent =
+    dark ? "☀️ Light" : "🌙 Dark";
+}
+
+if (localStorage.getItem("studyTheme") === "dark") {
+  document.body.classList.add("dark");
+  document.getElementById("themeBtn").textContent = "☀️ Light";
+}
+
+document.getElementById("taskInput").addEventListener(
+  "keydown", event => {
+    if (event.key === "Enter") addTask();
+  }
+);
 
 render();
 </script>
